@@ -18,22 +18,22 @@ using ReactiveUI;
 
 namespace ExampleCodeGenApp.Views
 {
-    public partial class CodeSimView : UserControl, IViewFor<CodeSimViewModel>
+    public partial class CodeSimView : UserControl, IViewFor<PartCalculationOutput>
     {
         #region ViewModel
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register(nameof(ViewModel),
-            typeof(CodeSimViewModel), typeof(CodeSimView), new PropertyMetadata(null));
+            typeof(PartCalculationOutput), typeof(CodeSimView), new PropertyMetadata(null));
 
-        public CodeSimViewModel ViewModel
+        public PartCalculationOutput ViewModel
         {
-            get => (CodeSimViewModel)GetValue(ViewModelProperty);
+            get => (PartCalculationOutput)GetValue(ViewModelProperty);
             set => SetValue(ViewModelProperty, value);
         }
 
         object IViewFor.ViewModel
         {
             get => ViewModel;
-            set => ViewModel = (CodeSimViewModel)value;
+            set => ViewModel = (PartCalculationOutput)value;
         }
         #endregion
 
@@ -43,7 +43,7 @@ namespace ExampleCodeGenApp.Views
 
             this.WhenActivated(d =>
             {
-                this.OneWayBind(ViewModel, vm => vm.RunScript, v => v.runButton.Command).DisposeWith(d);
+                this.OneWayBind(ViewModel, vm => vm.Calculate, v => v.runButton.Command).DisposeWith(d);
                 this.OneWayBind(ViewModel, vm => vm.ClearOutput, v => v.clearButton.Command).DisposeWith(d);
                 this.OneWayBind(ViewModel, vm => vm.Output, v => v.outputTextBlock.Text).DisposeWith(d);
             });

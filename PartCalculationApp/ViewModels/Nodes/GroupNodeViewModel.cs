@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using DynamicData;
-using ExampleCodeGenApp.Model;
-using ExampleCodeGenApp.Model.Compiler;
-using ExampleCodeGenApp.ViewModels.Editors;
+
 using ExampleCodeGenApp.Views;
+
 using NodeNetwork.Toolkit.Group.AddEndpointDropPanel;
-using NodeNetwork.Toolkit.ValueNode;
 using NodeNetwork.ViewModels;
+
 using ReactiveUI;
 
 namespace ExampleCodeGenApp.ViewModels.Nodes
 {
-    public class GroupNodeViewModel : CodeGenNodeViewModel
+    public class GroupNodeViewModel : PartCalculationViewModel
     {
         static GroupNodeViewModel()
         {
@@ -47,7 +42,7 @@ namespace ExampleCodeGenApp.ViewModels.Nodes
 
         public AddEndpointDropPanelViewModel AddEndpointDropPanelVM { get; private set; }
 
-        public GroupNodeViewModel(NetworkViewModel subnet) : base(NodeType.Group)
+        public GroupNodeViewModel(NetworkViewModel subnet) : base(PartCalculationNodeType.Group)
         {
             this.Name = "Group";
             this.Subnet = subnet;

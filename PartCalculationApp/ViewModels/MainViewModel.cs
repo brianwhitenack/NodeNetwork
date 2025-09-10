@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+
 using DynamicData;
+
 using ExampleCodeGenApp.Model;
 using ExampleCodeGenApp.ViewModels.Nodes;
+
 using NodeNetwork.Toolkit.BreadcrumbBar;
 using NodeNetwork.Toolkit.Group;
 using NodeNetwork.Toolkit.Layout;
@@ -16,6 +20,7 @@ using NodeNetwork.Toolkit.NodeList;
 using NodeNetwork.Utilities;
 using NodeNetwork.ViewModels;
 
+using PartCalculationApp.Model;
 using PartCalculationApp.ViewModels;
 
 using ReactiveUI;
@@ -43,8 +48,8 @@ namespace ExampleCodeGenApp.ViewModels
 
         public BreadcrumbBarViewModel NetworkBreadcrumbBar { get; } = new BreadcrumbBarViewModel();
         public NodeListViewModel NodeList { get; } = new NodeListViewModel();
-        public CodePreviewViewModel CodePreview { get; } = new CodePreviewViewModel();
-        public CodeSimViewModel CodeSim { get; } = new CodeSimViewModel();
+        public PartCalculationOutput Output { get; } = new PartCalculationOutput();
+        public MeasurementInputDisplayViewModel MeasurementDisplay { get; } = new MeasurementInputDisplayViewModel();
 
         public ReactiveCommand<Unit, Unit> AutoLayout { get; }
 		public ReactiveCommand<Unit, Unit> StartAutoLayoutLive { get; }
@@ -65,22 +70,41 @@ namespace ExampleCodeGenApp.ViewModels
                 Network = new NetworkViewModel()
             });
 
-            ButtonEventNode eventNode = new ButtonEventNode {CanBeRemovedByUser = false};
-            Network.Nodes.Add(eventNode);
+            DigitizerMeasurementsNode measurementInputNode = new DigitizerMeasurementsNode { CanBeRemovedByUser = false};
+            Network.Nodes.Add(measurementInputNode);
+
+            PartsOutputNode partsOutputNode = new PartsOutputNode { CanBeRemovedByUser = false, Position = new Point(300, 0) };
+            Network.Nodes.Add(partsOutputNode);
 
             //NodeList.AddNodeType(() => new ButtonEventNode());
-            NodeList.AddNodeType(() => new ForLoopNode());
-            NodeList.AddNodeType(() => new IntLiteralNode());
-            NodeList.AddNodeType(() => new PrintNode());
-            NodeList.AddNodeType(() => new TextLiteralNode());
+            NodeList.AddNodeType(() => new IntegerLiteralNode());
+            NodeList.AddNodeType(() => new StringLiteralNode());
             NodeList.AddNodeType(() => new DigitizerMeasurementsNode());
             NodeList.AddNodeType(() => new SelectionNode());
 
-            var codeObservable = eventNode.OnClickFlow.Values.Connect().Select(_ => new StatementSequence(eventNode.OnClickFlow.Values.Items));
-            codeObservable.BindTo(this, vm => vm.CodePreview.Code);
-            codeObservable.BindTo(this, vm => vm.CodeSim.Code);
+            Measurement input = new Measurement()
+            {
+                Area = 10,
+                Length = 5,
+                Count = 1,
+                Type = "Roof",
+                Selections = new Dictionary<string, object>()
+                 {
+                     { "Material", "Metal" },
+                 }
+            };
 
-			ForceDirectedLayouter layouter = new ForceDirectedLayouter();
+            measurementInputNode.MeasurementOutput.Value = Observable.Return(input);
+            Output.InputNode = measurementInputNode;
+            Output.OutputNode = partsOutputNode;
+
+            IObservable<Measurement> measurementObservable = measurementInputNode.MeasurementOutput.Value.Select(m => m);
+            measurementObservable.BindTo(this, vm => vm.MeasurementDisplay.Measurement);
+
+            IObservable<string> outputObservable = partsOutputNode.PartsInput.ValueChanged;
+            measurementObservable.BindTo(this, vm => vm.Output.Output);
+
+            ForceDirectedLayouter layouter = new ForceDirectedLayouter();
 			AutoLayout = ReactiveCommand.Create(() => layouter.Layout(new Configuration { Network = Network }, 10000));
 			StartAutoLayoutLive = ReactiveCommand.CreateFromObservable(() => 
 				Observable.StartAsync(ct => layouter.LayoutAsync(new Configuration { Network = Network }, ct)).TakeUntil(StopAutoLayoutLive)

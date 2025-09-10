@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Reactive.Linq;
-using DynamicData;
+﻿using DynamicData;
+
 using ExampleCodeGenApp.ViewModels.Nodes;
+
 using NodeNetwork.Toolkit.Group;
 using NodeNetwork.Toolkit.ValueNode;
 using NodeNetwork.ViewModels;
-using ReactiveUI;
 
 namespace ExampleCodeGenApp.ViewModels
 {
@@ -19,7 +17,7 @@ namespace ExampleCodeGenApp.ViewModels
         #region Endpoint Create
         public override ValueNodeOutputViewModel<T> CreateCompatibleOutput<T>(ValueNodeInputViewModel<T> input)
         {
-            return new CodeGenOutputViewModel<T>(((CodeGenPortViewModel)input.Port).PortType)
+            return new OutputViewModel<T>(((PartCalculationPortViewModel)input.Port).PortType)
             {
                 Name = input.Name,
                 Editor = new GroupEndpointEditorViewModel<T>(this)
@@ -28,7 +26,7 @@ namespace ExampleCodeGenApp.ViewModels
 
         public override ValueNodeOutputViewModel<IObservableList<T>> CreateCompatibleOutput<T>(ValueListNodeInputViewModel<T> input)
         {
-            return new CodeGenOutputViewModel<IObservableList<T>>(((CodeGenPortViewModel)input.Port).PortType)
+            return new OutputViewModel<IObservableList<T>>(((PartCalculationPortViewModel)input.Port).PortType)
             {
                 Editor = new GroupEndpointEditorViewModel<IObservableList<T>>(this)
             };
@@ -36,7 +34,7 @@ namespace ExampleCodeGenApp.ViewModels
 
         public override ValueNodeInputViewModel<T> CreateCompatibleInput<T>(ValueNodeOutputViewModel<T> output)
         {
-            return new CodeGenInputViewModel<T>(((CodeGenPortViewModel)output.Port).PortType)
+            return new InputViewModel<T>(((PartCalculationPortViewModel)output.Port).PortType)
             {
                 Name = output.Name,
                 Editor = new GroupEndpointEditorViewModel<T>(this),
@@ -46,7 +44,7 @@ namespace ExampleCodeGenApp.ViewModels
 
         public override ValueListNodeInputViewModel<T> CreateCompatibleInput<T>(ValueNodeOutputViewModel<IObservableList<T>> output)
         {
-            return new CodeGenListInputViewModel<T>(((CodeGenPortViewModel)output.Port).PortType)
+            return new ListInputViewModel<T>(((PartCalculationPortViewModel)output.Port).PortType)
             {
                 Name = output.Name,
                 Editor = new GroupEndpointEditorViewModel<T>(this),

@@ -19,22 +19,22 @@ using ReactiveUI;
 
 namespace ExampleCodeGenApp.Views
 {
-    public partial class CodeGenNodeView : IViewFor<CodeGenNodeViewModel>
+    public partial class CodeGenNodeView : IViewFor<PartCalculationViewModel>
     {
         #region ViewModel
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register(nameof(ViewModel),
-            typeof(CodeGenNodeViewModel), typeof(CodeGenNodeView), new PropertyMetadata(null));
+            typeof(PartCalculationViewModel), typeof(CodeGenNodeView), new PropertyMetadata(null));
 
-        public CodeGenNodeViewModel ViewModel
+        public PartCalculationViewModel ViewModel
         {
-            get => (CodeGenNodeViewModel)GetValue(ViewModelProperty);
+            get => (PartCalculationViewModel)GetValue(ViewModelProperty);
             set => SetValue(ViewModelProperty, value);
         }
 
         object IViewFor.ViewModel
         {
             get => ViewModel;
-            set => ViewModel = (CodeGenNodeViewModel)value;
+            set => ViewModel = (PartCalculationViewModel)value;
         }
         #endregion
 
@@ -51,15 +51,15 @@ namespace ExampleCodeGenApp.Views
             });
         }
 
-        public static  Brush ConvertNodeTypeToBrush(NodeType type)
+        public static Brush ConvertNodeTypeToBrush(PartCalculationNodeType type)
         {
             switch (type)
             {
-                case NodeType.EventNode: return new SolidColorBrush(Color.FromRgb(0x9b, 0x00, 0x00));
-                case NodeType.FlowControl: return new SolidColorBrush(Color.FromRgb(0x49, 0x49, 0x49));
-                case NodeType.Function: return new SolidColorBrush(Color.FromRgb(0x00, 0x39, 0xcb));
-                case NodeType.Literal: return new SolidColorBrush(Color.FromRgb(0x00, 0x60, 0x0f));
-                case NodeType.Group: return new SolidColorBrush(Color.FromRgb(0x7B, 0x1F, 0xA2));
+                case PartCalculationNodeType.Input: return new SolidColorBrush(Color.FromRgb(0x9b, 0x00, 0x00));
+                case PartCalculationNodeType.Output: return new SolidColorBrush(Color.FromRgb(0x49, 0x49, 0x49));
+                case PartCalculationNodeType.Function: return new SolidColorBrush(Color.FromRgb(0x00, 0x39, 0xcb));
+                case PartCalculationNodeType.Literal: return new SolidColorBrush(Color.FromRgb(0x00, 0x60, 0x0f));
+                //case NodeType.Group: return new SolidColorBrush(Color.FromRgb(0x7B, 0x1F, 0xA2));
                 default: throw new Exception("Unsupported node type");
             }
         }

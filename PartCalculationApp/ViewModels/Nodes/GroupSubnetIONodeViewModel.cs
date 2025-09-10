@@ -8,7 +8,7 @@ using ReactiveUI;
 
 namespace ExampleCodeGenApp.ViewModels.Nodes
 {
-    public class GroupSubnetIONodeViewModel : CodeGenNodeViewModel
+    public class GroupSubnetIONodeViewModel : PartCalculationViewModel
     {
         static GroupSubnetIONodeViewModel()
         {
@@ -41,7 +41,7 @@ namespace ExampleCodeGenApp.ViewModels.Nodes
 
         private readonly bool _isEntranceNode, _isExitNode;
 
-        public GroupSubnetIONodeViewModel(NetworkViewModel subnet, bool isEntranceNode, bool isExitNode) : base(NodeType.Group)
+        public GroupSubnetIONodeViewModel(NetworkViewModel subnet, bool isEntranceNode, bool isExitNode) : base(PartCalculationNodeType.Group)
         {
             this.Subnet = subnet;
             _isEntranceNode = isEntranceNode;

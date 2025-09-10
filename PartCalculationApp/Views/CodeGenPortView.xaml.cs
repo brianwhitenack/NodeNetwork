@@ -8,22 +8,22 @@ using ReactiveUI;
 
 namespace ExampleCodeGenApp.Views
 {
-    public partial class CodeGenPortView : IViewFor<CodeGenPortViewModel>
+    public partial class CodeGenPortView : IViewFor<PartCalculationPortViewModel>
     {
         #region ViewModel
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register(nameof(ViewModel),
-            typeof(CodeGenPortViewModel), typeof(CodeGenPortView), new PropertyMetadata(null));
+            typeof(PartCalculationPortViewModel), typeof(CodeGenPortView), new PropertyMetadata(null));
 
-        public CodeGenPortViewModel ViewModel
+        public PartCalculationPortViewModel ViewModel
         {
-            get => (CodeGenPortViewModel)GetValue(ViewModelProperty);
+            get => (PartCalculationPortViewModel)GetValue(ViewModelProperty);
             set => SetValue(ViewModelProperty, value);
         }
 
         object IViewFor.ViewModel
         {
             get => ViewModel;
-            set => ViewModel = (CodeGenPortViewModel)value;
+            set => ViewModel = (PartCalculationPortViewModel)value;
         }
         #endregion
 
@@ -51,14 +51,14 @@ namespace ExampleCodeGenApp.Views
             });
         }
 
-        public ControlTemplate GetTemplateFromPortType(PortType type)
+        public ControlTemplate GetTemplateFromPortType(PortDataType type)
         {
             switch (type)
             {
-                case PortType.Execution: return (ControlTemplate) Resources[ExecutionPortTemplateKey];
-                case PortType.Number: return (ControlTemplate) Resources[IntegerPortTemplateKey];
-                case PortType.String: return (ControlTemplate) Resources[StringPortTemplateKey];
-                case PortType.Measurement: return (ControlTemplate) Resources[MeasurementPortTemplateKey];
+                case PortDataType.Boolean: return (ControlTemplate) Resources[ExecutionPortTemplateKey];
+                case PortDataType.Number: return (ControlTemplate) Resources[IntegerPortTemplateKey];
+                case PortDataType.String: return (ControlTemplate) Resources[StringPortTemplateKey];
+                case PortDataType.Measurement: return (ControlTemplate) Resources[MeasurementPortTemplateKey];
                 default: throw new Exception("Unsupported port type");
             }
         }

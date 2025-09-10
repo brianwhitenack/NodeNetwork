@@ -1,17 +1,7 @@
 ﻿using System.Collections.Generic;
 
-using ExampleCodeGenApp.Model.Compiler;
-
 namespace PartCalculationApp.Model
 {
-    public class MeasurementExpression : ITypedExpression<Measurement>
-    {
-        public string Compile(CompilerContext context)
-        {
-            return "Measurement";
-        }
-    }
-
     public class Measurement
     {
         public string Type { get; set; }

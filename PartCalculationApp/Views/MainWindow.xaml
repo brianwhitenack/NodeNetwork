@@ -69,7 +69,7 @@
                 <RowDefinition Height="5"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <views1:CodePreviewView Grid.Row="0" x:Name="codePreviewView"/>
+            <views1:MeasurementInputView Grid.Row="0" x:Name="codePreviewView"/>
             <GridSplitter Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
             <views1:CodeSimView Grid.Row="2" x:Name="codeSimView"/>
         </Grid>
