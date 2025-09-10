@@ -18,7 +18,7 @@ namespace ExampleCodeGenApp.ViewModels.Nodes
         public NetworkViewModel Subnet { get; }
 
         #region IOBinding
-        public CodeNodeGroupIOBinding IOBinding
+        public GroupIOBinding IOBinding
         {
             get => _ioBinding;
             set
@@ -34,14 +34,14 @@ namespace ExampleCodeGenApp.ViewModels.Nodes
                 };
             }
         }
-        private CodeNodeGroupIOBinding _ioBinding;
+        private GroupIOBinding _ioBinding;
         #endregion
 
         public AddEndpointDropPanelViewModel AddEndpointDropPanelVM { get; set; }
 
         private readonly bool _isEntranceNode, _isExitNode;
 
-        public GroupSubnetIONodeViewModel(NetworkViewModel subnet, bool isEntranceNode, bool isExitNode) : base(PartCalculationNodeType.Group)
+        public GroupSubnetIONodeViewModel(NetworkViewModel subnet, bool isEntranceNode, bool isExitNode) : base(NodeType.Group)
         {
             this.Subnet = subnet;
             _isEntranceNode = isEntranceNode;

@@ -5,6 +5,7 @@
         Number,
         String,
         Boolean,
-        Measurement
+        Measurement,
+        Part
     }
 }

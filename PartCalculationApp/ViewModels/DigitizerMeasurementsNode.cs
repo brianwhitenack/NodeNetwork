@@ -18,7 +18,7 @@ namespace PartCalculationApp.ViewModels
 
         public OutputViewModel<Measurement> MeasurementOutput { get; set; }
 
-        public DigitizerMeasurementsNode() : base(PartCalculationNodeType.Input)
+        public DigitizerMeasurementsNode() : base(NodeType.Input)
         {
             Name = "Digitizer Measurement";
 

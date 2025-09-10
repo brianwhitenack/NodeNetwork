@@ -1,14 +1,14 @@
 ﻿using System.Reactive;
-using System.Reactive.Linq;
 
 using PartCalculationApp.Model;
 using PartCalculationApp.ViewModels;
+using PartCalculationApp.ViewModels.Nodes;
 
 using ReactiveUI;
 
 namespace ExampleCodeGenApp.ViewModels
 {
-    public class PartCalculationOutput : ReactiveObject
+    public class PartCalculationOutputObject : ReactiveObject
     {
         #region Code
 
@@ -35,25 +35,30 @@ namespace ExampleCodeGenApp.ViewModels
         public ReactiveCommand<Unit, Unit> Calculate { get; }
         public ReactiveCommand<Unit, Unit> ClearOutput { get; }
 
-        public PartCalculationOutput()
+        public PartCalculationOutputObject()
         {
             Calculate = ReactiveCommand.Create(() =>
                 {
                     if (OutputNode?.PartsInput?.Value != null)
                     {
-                        string selectedValue = OutputNode.PartsInput.Value;
-                        if (selectedValue != null)
+                        Part generatedPart = OutputNode.PartsInput.Value;
+                        if (generatedPart != null)
                         {
-                            Print($"Selected Value: {selectedValue}");
+                            Print($"Generated Part:");
+                            Print($"SKU: {generatedPart.Sku}");
+                            Print($"Desc: {generatedPart.Description}");
+                            Print($"Package: {generatedPart.Package}");
+                            Print($"Qty: {generatedPart.Quantity}");
+                            Print($"UOM: {generatedPart.UnitOfMeasure}");
                         }
                         else
                         {
-                            Print("No value selected");
+                            Print("No part created");
                         }
                     }
                     else
                     {
-                        Print("Output node not connected");
+                        Print("No part created");
                     }
                 });
 

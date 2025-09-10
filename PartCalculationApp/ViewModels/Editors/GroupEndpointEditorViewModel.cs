@@ -40,7 +40,7 @@ namespace ExampleCodeGenApp.ViewModels.Nodes
             Splat.Locator.CurrentMutable.Register(() => new GroupEndpointEditorView(), typeof(IViewFor<GroupEndpointEditorViewModel<T>>));
         }
 
-        public GroupEndpointEditorViewModel(CodeNodeGroupIOBinding nodeGroupBinding)
+        public GroupEndpointEditorViewModel(GroupIOBinding nodeGroupBinding)
         {
             MoveUp = ReactiveCommand.Create(() =>
             {

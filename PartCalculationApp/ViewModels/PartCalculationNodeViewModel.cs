@@ -17,9 +17,9 @@ namespace ExampleCodeGenApp.ViewModels
             Splat.Locator.CurrentMutable.Register(() => new CodeGenNodeView(), typeof(IViewFor<PartCalculationNodeViewModel>));
         }
 
-        public PartCalculationNodeType NodeType { get; }
+        public NodeType NodeType { get; }
 
-        public PartCalculationNodeViewModel(PartCalculationNodeType type)
+        public PartCalculationNodeViewModel(NodeType type)
         {
             NodeType = type;
         }

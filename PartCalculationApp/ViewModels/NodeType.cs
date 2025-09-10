@@ -1,6 +1,6 @@
 ﻿namespace ExampleCodeGenApp.ViewModels
 {
-    public enum PartCalculationNodeType
+    public enum NodeType
     {
         Input,
         Output,

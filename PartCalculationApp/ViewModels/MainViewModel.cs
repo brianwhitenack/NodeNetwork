@@ -22,6 +22,7 @@ using NodeNetwork.ViewModels;
 
 using PartCalculationApp.Model;
 using PartCalculationApp.ViewModels;
+using PartCalculationApp.ViewModels.Nodes;
 
 using ReactiveUI;
 
@@ -48,8 +49,8 @@ namespace ExampleCodeGenApp.ViewModels
 
         public BreadcrumbBarViewModel NetworkBreadcrumbBar { get; } = new BreadcrumbBarViewModel();
         public NodeListViewModel NodeList { get; } = new NodeListViewModel();
-        public PartCalculationOutput Output { get; } = new PartCalculationOutput();
-        public MeasurementInputDisplayViewModel MeasurementDisplay { get; } = new MeasurementInputDisplayViewModel();
+        public PartCalculationOutputObject Output { get; } = new PartCalculationOutputObject();
+        public MeasurementInputObject MeasurementDisplay { get; } = new MeasurementInputObject();
 
         public ReactiveCommand<Unit, Unit> AutoLayout { get; }
 		public ReactiveCommand<Unit, Unit> StartAutoLayoutLive { get; }
@@ -76,18 +77,19 @@ namespace ExampleCodeGenApp.ViewModels
             PartsOutputNode partsOutputNode = new PartsOutputNode { CanBeRemovedByUser = false, Position = new Point(300, 0) };
             Network.Nodes.Add(partsOutputNode);
 
-            //NodeList.AddNodeType(() => new ButtonEventNode());
             NodeList.AddNodeType(() => new IntegerLiteralNode());
             NodeList.AddNodeType(() => new StringLiteralNode());
             NodeList.AddNodeType(() => new DigitizerMeasurementsNode());
             NodeList.AddNodeType(() => new SelectionNode());
+            NodeList.AddNodeType(() => new CreatePartNode());
+            NodeList.AddNodeType(() => new MeasurementLengthNode());
 
             Measurement input = new Measurement()
             {
                 Area = 10,
                 Length = 5,
                 Count = 1,
-                Type = "Roof",
+                Type = "Beam",
                 Selections = new Dictionary<string, object>()
                  {
                      { "Material", "Metal" },
@@ -100,9 +102,6 @@ namespace ExampleCodeGenApp.ViewModels
 
             IObservable<Measurement> measurementObservable = measurementInputNode.MeasurementOutput.Value.Select(m => m);
             measurementObservable.BindTo(this, vm => vm.MeasurementDisplay.Measurement);
-
-            IObservable<string> outputObservable = partsOutputNode.PartsInput.ValueChanged;
-            measurementObservable.BindTo(this, vm => vm.Output.Output);
 
             ForceDirectedLayouter layouter = new ForceDirectedLayouter();
 			AutoLayout = ReactiveCommand.Create(() => layouter.Layout(new Configuration { Network = Network }, 10000));
@@ -118,11 +117,11 @@ namespace ExampleCodeGenApp.ViewModels
                 ExitNodeFactory = () => new GroupSubnetIONodeViewModel(Network, false, true) { Name = "Group Output" },
                 SubNetworkFactory = () => new NetworkViewModel(),
                 IOBindingFactory = (groupNode, entranceNode, exitNode) =>
-                    new CodeNodeGroupIOBinding(groupNode, entranceNode, exitNode)
+                    new GroupIOBinding(groupNode, entranceNode, exitNode)
             };
             GroupNodes = ReactiveCommand.Create(() =>
             {
-                var groupBinding = (CodeNodeGroupIOBinding) grouper.MergeIntoGroup(Network, Network.SelectedNodes.Items);
+                var groupBinding = (GroupIOBinding) grouper.MergeIntoGroup(Network, Network.SelectedNodes.Items);
                 ((GroupNodeViewModel)groupBinding.GroupNode).IOBinding = groupBinding;
                 ((GroupSubnetIONodeViewModel)groupBinding.EntranceNode).IOBinding = groupBinding;
                 ((GroupSubnetIONodeViewModel)groupBinding.ExitNode).IOBinding = groupBinding;

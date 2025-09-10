@@ -8,9 +8,9 @@ namespace ExampleCodeGenApp.ViewModels
 {
     public class PartCalculationViewModel : NodeViewModel
     {
-        public PartCalculationNodeType NodeType { get; }
+        public NodeType NodeType { get; }
 
-        public PartCalculationViewModel(PartCalculationNodeType type)
+        public PartCalculationViewModel(NodeType type)
         {
             NodeType = type;
         }

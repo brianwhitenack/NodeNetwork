@@ -23,7 +23,7 @@ namespace ExampleCodeGenApp.ViewModels.Nodes
 
         public ValueNodeOutputViewModel<int> Output { get; }
 
-        public IntegerLiteralNode() : base(PartCalculationNodeType.Literal)
+        public IntegerLiteralNode() : base(NodeType.Literal)
         {
             Name = "Integer";
 

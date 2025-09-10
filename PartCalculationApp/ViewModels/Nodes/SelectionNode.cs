@@ -10,7 +10,7 @@ using PartCalculationApp.Model;
 
 using ReactiveUI;
 
-namespace PartCalculationApp.ViewModels
+namespace PartCalculationApp.ViewModels.Nodes
 {
     public class SelectionNode : PartCalculationViewModel
     {
@@ -24,7 +24,7 @@ namespace PartCalculationApp.ViewModels
 
         public OutputViewModel<string> SelectionValueOutput { get; }
 
-        public SelectionNode() : base(PartCalculationNodeType.Function)
+        public SelectionNode() : base(NodeType.Function)
         {
             Name = "Selection";
 
@@ -45,7 +45,7 @@ namespace PartCalculationApp.ViewModels
             System.IObservable<string> selectedValue = this.WhenAnyValue(
                 vm => vm.SelectionNameInput.Value,
                 vm => vm.MeasurementInput.Value)
-                .Select(GetSelectionValue);
+                .Select(_ => GetSelectionValue());
 
             SelectionValueOutput = new OutputViewModel<string>(PortDataType.String)
             {
@@ -55,7 +55,7 @@ namespace PartCalculationApp.ViewModels
             Outputs.Add(SelectionValueOutput);
         }
 
-        private string GetSelectionValue((string selectionName, Measurement measurement) _)
+        private string GetSelectionValue()
         {
             if (SelectionNameInput.Value == null || MeasurementInput.Value == null)
             {

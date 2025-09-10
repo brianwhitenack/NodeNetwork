@@ -8,9 +8,9 @@ using NodeNetwork.ViewModels;
 
 namespace ExampleCodeGenApp.ViewModels
 {
-    public class CodeNodeGroupIOBinding : ValueNodeGroupIOBinding
+    public class GroupIOBinding : ValueNodeGroupIOBinding
     {
-        public CodeNodeGroupIOBinding(NodeViewModel groupNode, NodeViewModel entranceNode, NodeViewModel exitNode) : base(groupNode, entranceNode, exitNode)
+        public GroupIOBinding(NodeViewModel groupNode, NodeViewModel entranceNode, NodeViewModel exitNode) : base(groupNode, entranceNode, exitNode)
         {
         }
 

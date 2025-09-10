@@ -18,22 +18,22 @@ using ReactiveUI;
 
 namespace ExampleCodeGenApp.Views
 {
-    public partial class CodeSimView : UserControl, IViewFor<PartCalculationOutput>
+    public partial class CodeSimView : UserControl, IViewFor<PartCalculationOutputObject>
     {
         #region ViewModel
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register(nameof(ViewModel),
-            typeof(PartCalculationOutput), typeof(CodeSimView), new PropertyMetadata(null));
+            typeof(PartCalculationOutputObject), typeof(CodeSimView), new PropertyMetadata(null));
 
-        public PartCalculationOutput ViewModel
+        public PartCalculationOutputObject ViewModel
         {
-            get => (PartCalculationOutput)GetValue(ViewModelProperty);
+            get => (PartCalculationOutputObject)GetValue(ViewModelProperty);
             set => SetValue(ViewModelProperty, value);
         }
 
         object IViewFor.ViewModel
         {
             get => ViewModel;
-            set => ViewModel = (PartCalculationOutput)value;
+            set => ViewModel = (PartCalculationOutputObject)value;
         }
         #endregion
 

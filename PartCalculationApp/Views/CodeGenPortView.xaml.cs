@@ -32,6 +32,7 @@ namespace ExampleCodeGenApp.Views
         public const String IntegerPortTemplateKey = "IntegerPortTemplate";
         public const String StringPortTemplateKey = "StringPortTemplate"; 
         public const String MeasurementPortTemplateKey = "MeasurementPortTemplate"; 
+        public const String PartPortTemplateKey = "PartPortTemplate";
         #endregion
 
         public CodeGenPortView()
@@ -59,6 +60,7 @@ namespace ExampleCodeGenApp.Views
                 case PortDataType.Number: return (ControlTemplate) Resources[IntegerPortTemplateKey];
                 case PortDataType.String: return (ControlTemplate) Resources[StringPortTemplateKey];
                 case PortDataType.Measurement: return (ControlTemplate) Resources[MeasurementPortTemplateKey];
+                case PortDataType.Part: return (ControlTemplate) Resources[PartPortTemplateKey];
                 default: throw new Exception("Unsupported port type");
             }
         }

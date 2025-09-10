@@ -7,22 +7,22 @@ using ReactiveUI;
 
 namespace ExampleCodeGenApp.Views
 {
-    public partial class MeasurementInputView : IViewFor<MeasurementInputDisplayViewModel>
+    public partial class MeasurementInputView : IViewFor<MeasurementInputObject>
     {
         #region ViewModel
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register(nameof(ViewModel),
-            typeof(MeasurementInputDisplayViewModel), typeof(MeasurementInputView), new PropertyMetadata(null));
+            typeof(MeasurementInputObject), typeof(MeasurementInputView), new PropertyMetadata(null));
 
-        public MeasurementInputDisplayViewModel ViewModel
+        public MeasurementInputObject ViewModel
         {
-            get => (MeasurementInputDisplayViewModel)GetValue(ViewModelProperty);
+            get => (MeasurementInputObject)GetValue(ViewModelProperty);
             set => SetValue(ViewModelProperty, value);
         }
 
         object IViewFor.ViewModel
         {
             get => ViewModel;
-            set => ViewModel = (MeasurementInputDisplayViewModel)value;
+            set => ViewModel = (MeasurementInputObject)value;
         }
         #endregion
 

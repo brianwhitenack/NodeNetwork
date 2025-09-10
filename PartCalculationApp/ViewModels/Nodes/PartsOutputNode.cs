@@ -3,9 +3,11 @@
 using ExampleCodeGenApp.ViewModels;
 using ExampleCodeGenApp.Views;
 
+using PartCalculationApp.Model;
+
 using ReactiveUI;
 
-namespace PartCalculationApp.ViewModels
+namespace PartCalculationApp.ViewModels.Nodes
 {
     public class PartsOutputNode : PartCalculationViewModel
     {
@@ -14,13 +16,13 @@ namespace PartCalculationApp.ViewModels
             Splat.Locator.CurrentMutable.Register(() => new CodeGenNodeView(), typeof(IViewFor<PartsOutputNode>));
         }
 
-        public InputViewModel<string> PartsInput { get; set; }
+        public InputViewModel<Part> PartsInput { get; set; }
 
-        public PartsOutputNode() : base(PartCalculationNodeType.Output)
+        public PartsOutputNode() : base(NodeType.Output)
         {
             Name = "Parts";
 
-            PartsInput = new InputViewModel<string>(PortDataType.String);
+            PartsInput = new InputViewModel<Part>(PortDataType.Part);
 
             Inputs.Add(PartsInput);
         }
