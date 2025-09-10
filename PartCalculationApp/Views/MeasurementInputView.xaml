@@ -12,7 +12,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label Content="Code" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top" FontSize="18" FontFamily="Segoe UI Semilight"/>
+        <Label Content="Measurements" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top" FontSize="18" FontFamily="Segoe UI Semilight"/>
 
         <Grid Grid.Row="1" Margin="10,0,10,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <TextBlock x:Name="errorTextBlock" Foreground="Red" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap"/>

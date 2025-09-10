@@ -12,21 +12,21 @@ using ReactiveUI;
 
 namespace PartCalculationApp.ViewModels.Nodes
 {
-    public class SelectionNode : PartCalculationViewModel
+    public class NumberSelectionNode : PartCalculationViewModel
     {
-        static SelectionNode()
+        static NumberSelectionNode()
         {
-            Splat.Locator.CurrentMutable.Register(() => new CodeGenNodeView(), typeof(IViewFor<SelectionNode>));
+            Splat.Locator.CurrentMutable.Register(() => new CodeGenNodeView(), typeof(IViewFor<NumberSelectionNode>));
         }
 
         public InputViewModel<string> SelectionNameInput { get; }
         public InputViewModel<Measurement> MeasurementInput { get; }
 
-        public OutputViewModel<string> SelectionValueOutput { get; }
+        public OutputViewModel<double?> SelectionValueOutput { get; }
 
-        public SelectionNode() : base(NodeType.Function)
+        public NumberSelectionNode() : base(NodeType.Function)
         {
-            Name = "Selection";
+            Name = "Number Selection";
 
             MeasurementInput = new InputViewModel<Measurement>(PortDataType.Measurement)
             {
@@ -42,12 +42,12 @@ namespace PartCalculationApp.ViewModels.Nodes
             Inputs.Add(MeasurementInput);
             Inputs.Add(SelectionNameInput);
 
-            System.IObservable<string> selectedValue = this.WhenAnyValue(
+            System.IObservable<double?> selectedValue = this.WhenAnyValue(
                 vm => vm.SelectionNameInput.Value,
                 vm => vm.MeasurementInput.Value)
                 .Select(_ => GetSelectionValue());
 
-            SelectionValueOutput = new OutputViewModel<string>(PortDataType.String)
+            SelectionValueOutput = new OutputViewModel<double?>(PortDataType.Number)
             {
                 Name = "Selection Value",
                 Value = selectedValue
@@ -55,16 +55,17 @@ namespace PartCalculationApp.ViewModels.Nodes
             Outputs.Add(SelectionValueOutput);
         }
 
-        private string GetSelectionValue()
+        private double? GetSelectionValue()
         {
             if (SelectionNameInput.Value == null || MeasurementInput.Value == null)
             {
                 return null;
             }
 
-            if (MeasurementInput.Value.Selections.TryGetValue(SelectionNameInput.Value, out object value))
+            if (MeasurementInput.Value.Selections.TryGetValue(SelectionNameInput.Value, out object value) && 
+                double.TryParse(value?.ToString(), out double result))
             {
-                return value?.ToString();
+                return result;
             }
             else
             {

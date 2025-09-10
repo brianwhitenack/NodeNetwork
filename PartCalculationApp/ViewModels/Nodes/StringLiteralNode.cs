@@ -25,7 +25,7 @@ namespace ExampleCodeGenApp.ViewModels.Nodes
 
         public StringLiteralNode() : base(NodeType.Literal)
         {
-            this.Name = "Text";
+            this.Name = "String";
 
             Output = new OutputViewModel<string>(PortDataType.String)
             {

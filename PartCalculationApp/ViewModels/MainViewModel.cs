@@ -71,28 +71,49 @@ namespace ExampleCodeGenApp.ViewModels
                 Network = new NetworkViewModel()
             });
 
-            DigitizerMeasurementsNode measurementInputNode = new DigitizerMeasurementsNode { CanBeRemovedByUser = false};
+            DigitizerMeasurementsNode measurementInputNode = new DigitizerMeasurementsNode 
+            {
+                Position = new Point(50, 50),
+                CanBeRemovedByUser = false
+            };
             Network.Nodes.Add(measurementInputNode);
 
-            PartsOutputNode partsOutputNode = new PartsOutputNode { CanBeRemovedByUser = false, Position = new Point(300, 0) };
+            PartsOutputNode partsOutputNode = new PartsOutputNode 
+            {
+                CanBeRemovedByUser = false,
+                Position = new Point(1000, 50) 
+            };
             Network.Nodes.Add(partsOutputNode);
 
-            NodeList.AddNodeType(() => new IntegerLiteralNode());
+            // variables
+            NodeList.AddNodeType(() => new NumberLiteralNode());
             NodeList.AddNodeType(() => new StringLiteralNode());
-            NodeList.AddNodeType(() => new DigitizerMeasurementsNode());
-            NodeList.AddNodeType(() => new SelectionNode());
+
+            NodeList.AddNodeType(() => new StringSelectionNode());
+            NodeList.AddNodeType(() => new NumberSelectionNode());
             NodeList.AddNodeType(() => new CreatePartNode());
             NodeList.AddNodeType(() => new MeasurementLengthNode());
+            NodeList.AddNodeType(() => new ConcatenationNode());
+            NodeList.AddNodeType(() => new ToStringNode());
+
+            NodeList.AddNodeType(() => new DivideNode());
+            NodeList.AddNodeType(() => new SubtractNode());
+            NodeList.AddNodeType(() => new AddNode());
+            NodeList.AddNodeType(() => new MultiplyNode());
+
 
             Measurement input = new Measurement()
             {
-                Area = 10,
-                Length = 5,
+                Length = 50,
                 Count = 1,
                 Type = "Beam",
                 Selections = new Dictionary<string, object>()
                  {
-                     { "Material", "Metal" },
+                    { "Thickness", 2 },
+                    { "Width", 4 },
+                    { "Material", "LVL" },
+                    { "BeamType", "HEADER" },
+                    { "Plies", 3 },
                  }
             };
 
