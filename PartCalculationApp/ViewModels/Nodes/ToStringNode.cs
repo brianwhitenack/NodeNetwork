@@ -7,6 +7,8 @@ using ExampleCodeGenApp.ViewModels;
 using ExampleCodeGenApp.ViewModels.Editors;
 using ExampleCodeGenApp.Views;
 
+using PartCalculationApp.Serialization;
+
 using ReactiveUI;
 
 namespace PartCalculationApp.ViewModels.Nodes
@@ -56,6 +58,16 @@ namespace PartCalculationApp.ViewModels.Nodes
             {
                 return Input.Value.ToString();
             }
+        }
+
+        protected override SerializedNode InternalSerialize()
+        {
+            return new SerializedToStringNode();
+        }
+
+        protected override void InternalDeserialize(SerializedNode data)
+        {
+
         }
     }
 }

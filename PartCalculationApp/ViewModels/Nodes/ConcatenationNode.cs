@@ -7,6 +7,8 @@ using ExampleCodeGenApp.ViewModels;
 using ExampleCodeGenApp.ViewModels.Editors;
 using ExampleCodeGenApp.Views;
 
+using PartCalculationApp.Serialization;
+
 using ReactiveUI;
 
 namespace PartCalculationApp.ViewModels.Nodes
@@ -73,6 +75,16 @@ namespace PartCalculationApp.ViewModels.Nodes
             string str1 = String1.Value ?? "";
             string str2 = String2.Value ?? "";
             return $"{str1}{sep}{str2}";
+        }
+
+        protected override SerializedNode InternalSerialize()
+        {
+            return new SerializedConcatenationNode();
+        }
+
+        protected override void InternalDeserialize(SerializedNode data)
+        {
+
         }
     }
 }

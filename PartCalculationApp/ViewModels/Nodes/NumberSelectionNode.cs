@@ -1,4 +1,5 @@
-﻿using System.Reactive.Linq;
+﻿using System;
+using System.Reactive.Linq;
 
 using DynamicData;
 
@@ -7,6 +8,7 @@ using ExampleCodeGenApp.ViewModels.Editors;
 using ExampleCodeGenApp.Views;
 
 using PartCalculationApp.Model;
+using PartCalculationApp.Serialization;
 
 using ReactiveUI;
 
@@ -71,6 +73,16 @@ namespace PartCalculationApp.ViewModels.Nodes
             {
                 return null;
             }
+        }
+
+        protected override SerializedNode InternalSerialize()
+        {
+            return new SerializedNumberSelectionNode();
+        }
+
+        protected override void InternalDeserialize(SerializedNode data)
+        {
+
         }
     }
 }

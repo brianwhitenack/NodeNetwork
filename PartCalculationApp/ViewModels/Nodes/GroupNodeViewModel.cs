@@ -7,6 +7,8 @@ using ExampleCodeGenApp.Views;
 using NodeNetwork.Toolkit.Group.AddEndpointDropPanel;
 using NodeNetwork.ViewModels;
 
+using PartCalculationApp.Serialization;
+
 using ReactiveUI;
 
 namespace ExampleCodeGenApp.ViewModels.Nodes
@@ -46,6 +48,16 @@ namespace ExampleCodeGenApp.ViewModels.Nodes
         {
             this.Name = "Group";
             this.Subnet = subnet;
+        }
+
+        protected override SerializedNode InternalSerialize()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void InternalDeserialize(SerializedNode data)
+        {
+            throw new NotImplementedException();
         }
     }
 }

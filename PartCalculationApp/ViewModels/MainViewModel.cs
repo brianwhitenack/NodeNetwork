@@ -21,10 +21,11 @@ using NodeNetwork.Utilities;
 using NodeNetwork.ViewModels;
 
 using PartCalculationApp.Model;
-using PartCalculationApp.ViewModels;
 using PartCalculationApp.ViewModels.Nodes;
+using PartCalculationApp.Serialization;
 
 using ReactiveUI;
+using Microsoft.Win32;
 
 namespace ExampleCodeGenApp.ViewModels
 {
@@ -59,6 +60,9 @@ namespace ExampleCodeGenApp.ViewModels
         public ReactiveCommand<Unit, Unit> GroupNodes { get; }
         public ReactiveCommand<Unit, Unit> UngroupNodes { get; }
         public ReactiveCommand<Unit, Unit> OpenGroup { get; }
+
+        public ReactiveCommand<Unit, Unit> SaveGraph { get; }
+        public ReactiveCommand<Unit, Unit> LoadGraph { get; }
 
         public MainViewModel()
         {
@@ -168,6 +172,113 @@ namespace ExampleCodeGenApp.ViewModels
                     Name = selectedGroupNode.Name
                 });
             }, isGroupNodeSelected);
+
+            // Initialize serialization
+            var nodeFactory = new NodeFactory();
+            RegisterNodeTypes(nodeFactory);
+            var graphSerializer = new GraphSerializer(nodeFactory);
+
+            // Save command
+            SaveGraph = ReactiveCommand.Create(() =>
+            {
+                var saveDialog = new SaveFileDialog
+                {
+                    Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
+                    DefaultExt = "json",
+                    FileName = "graph.json"
+                };
+
+                if (saveDialog.ShowDialog() == true)
+                {
+                    try
+                    {
+                        graphSerializer.SerializeToFile(Network, saveDialog.FileName);
+                    }
+                    catch (Exception ex)
+                    {
+                        // In a real app, show error message to user
+                        Console.WriteLine($"Failed to save graph: {ex.Message}");
+                    }
+                }
+            });
+
+            // Load command
+            LoadGraph = ReactiveCommand.Create(() =>
+            {
+                var openDialog = new OpenFileDialog
+                {
+                    Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
+                    DefaultExt = "json"
+                };
+
+                if (openDialog.ShowDialog() == true)
+                {
+                    try
+                    {
+                        var loadedNetwork = graphSerializer.DeserializeFromFile(openDialog.FileName, input);
+                        
+                        // Replace the current network with the loaded one
+                        Network.Nodes.Clear();
+                        Network.Connections.Clear();
+                        
+                        foreach (var node in loadedNetwork.Nodes.Items)
+                        {
+                            Network.Nodes.Add(node);
+                        }
+                        
+                        foreach (var connection in loadedNetwork.Connections.Items)
+                        {
+                            Network.Connections.Add(connection);
+                        }
+
+                        // Re-wire special nodes if they exist
+                        DigitizerMeasurementsNode digitizerNode = Network.Nodes.Items
+                            .OfType<DigitizerMeasurementsNode>()
+                            .FirstOrDefault();
+                        PartsOutputNode partsNode = Network.Nodes.Items
+                            .OfType<PartsOutputNode>()
+                            .FirstOrDefault();
+
+                        if (digitizerNode != null)
+                        {
+                            Output.InputNode = digitizerNode;
+                            // Restore the measurement observable
+                            IObservable<Measurement> measurementObservable = digitizerNode.MeasurementOutput.Value.Select(m => m);
+                            measurementObservable.BindTo(this, vm => vm.MeasurementDisplay.Measurement);
+                        }
+
+                        if (partsNode != null)
+                        {
+                            Output.OutputNode = partsNode;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // In a real app, show error message to user
+                        Console.WriteLine($"Failed to load graph: {ex.Message}");
+                    }
+                }
+            });
+        }
+
+        private void RegisterNodeTypes(NodeFactory factory)
+        {
+            // Register all node types that implement ISerializableNode
+            // These registrations should match the types in the NodeList
+            factory.RegisterNode("StringLiteral", () => new StringLiteralNode());
+            factory.RegisterNode("NumberLiteral", () => new NumberLiteralNode());
+            factory.RegisterNode("StringSelection", () => new StringSelectionNode());
+            factory.RegisterNode("NumberSelection", () => new NumberSelectionNode());
+            factory.RegisterNode("MeasurementLength", () => new MeasurementLengthNode());
+            factory.RegisterNode("CreatePart", () => new CreatePartNode());
+            factory.RegisterNode("Concatenation", () => new ConcatenationNode());
+            factory.RegisterNode("ToString", () => new ToStringNode());
+            factory.RegisterNode("Add", () => new AddNode());
+            factory.RegisterNode("Subtract", () => new SubtractNode());
+            factory.RegisterNode("Multiply", () => new MultiplyNode());
+            factory.RegisterNode("Divide", () => new DivideNode());
+            factory.RegisterNode("DigitizerMeasurements", () => new DigitizerMeasurementsNode());
+            factory.RegisterNode("PartsOutput", () => new PartsOutputNode());
         }
     }
 }

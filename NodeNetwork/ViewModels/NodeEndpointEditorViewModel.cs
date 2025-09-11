@@ -13,7 +13,7 @@ namespace NodeNetwork.ViewModels
     /// <summary>
     /// The viewmodel for the editor component that is displayed next to a node endpoint.
     /// </summary>
-    public class NodeEndpointEditorViewModel : ReactiveObject
+    public abstract class NodeEndpointEditorViewModel : ReactiveObject
     {
         static NodeEndpointEditorViewModel()
         {
@@ -35,5 +35,9 @@ namespace NodeNetwork.ViewModels
         }
         private Endpoint _parent;
         #endregion
+
+        public abstract object GetValue();
+
+        public abstract void SetValue(object value);
     }
 }

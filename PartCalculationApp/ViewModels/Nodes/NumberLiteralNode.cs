@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reactive.Linq;
 
 using DynamicData;
@@ -7,6 +8,7 @@ using ExampleCodeGenApp.ViewModels.Editors;
 using ExampleCodeGenApp.Views;
 
 using NodeNetwork.Toolkit.ValueNode;
+using PartCalculationApp.Serialization;
 
 using ReactiveUI;
 
@@ -36,6 +38,16 @@ namespace ExampleCodeGenApp.ViewModels.Nodes
                 Value = ValueEditor.ValueChanged.Select(v => v)
             };
             Outputs.Add(Output);
+        }
+
+        protected override SerializedNode InternalSerialize()
+        {
+            return new SerializedNumberLiteralNode();
+        }
+
+        protected override void InternalDeserialize(SerializedNode data)
+        {
+
         }
     }
 }

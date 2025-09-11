@@ -7,6 +7,7 @@ using ExampleCodeGenApp.ViewModels.Editors;
 using ExampleCodeGenApp.Views;
 
 using PartCalculationApp.Model;
+using PartCalculationApp.Serialization;
 
 using ReactiveUI;
 
@@ -98,6 +99,16 @@ namespace PartCalculationApp.ViewModels.Nodes
                 Quantity = QuantityInput.Value.Value,
                 UnitOfMeasure = UnitOfMeasurementInput.Value
             };
+        }
+
+        protected override SerializedNode InternalSerialize()
+        {
+            return new SerializedCreatePartNode();
+        }
+
+        protected override void InternalDeserialize(SerializedNode data)
+        {
+
         }
     }
 }

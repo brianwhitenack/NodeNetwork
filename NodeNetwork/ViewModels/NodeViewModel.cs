@@ -207,8 +207,12 @@ namespace NodeNetwork.ViewModels
         private ResizeOrientation _resizable;
         #endregion
 
+        public Guid Id { get; protected set; }
+
         public NodeViewModel()
         {
+            Id = Guid.NewGuid();
+
             // Setup a default EndpointGroupViewModelFactory that will be used to create endpoint groups.
             EndpointGroupViewModelFactory = (group, allInputs, allOutputs, children, factory) => new EndpointGroupViewModel(group, allInputs, allOutputs, children, factory);
 
