@@ -10,30 +10,34 @@ namespace ExampleCodeGenApp.ViewModels
 {
     public class MeasurementInputObject : ReactiveObject
     {
-        public Measurement Measurement
+        public List<Measurement> Measurements
         {
-            get => _measurement;
-            set => this.RaiseAndSetIfChanged(ref _measurement, value);
+            get => _measurements;
+            set => this.RaiseAndSetIfChanged(ref _measurements, value);
         }
-        private Measurement _measurement;
+        private List<Measurement> _measurements;
 
         private readonly ObservableAsPropertyHelper<string> _measurementText;
         public string MeasurementText => _measurementText.Value;
 
         public MeasurementInputObject()
         {
-            this.WhenAnyValue(vm => vm.Measurement).Where(c => c != null)
+            this.WhenAnyValue(vm => vm.Measurements).Where(c => c != null)
                 .Select(c =>
                 {
-                    List<string> lines = new List<string>()
+                    List<string> lines = new List<string>();
+                    foreach (var measurement in c)
                     {
-                        $"Area = {c.Area};",
-                        $"Length = {c.Length};",
-                        $"Count = {c.Count};",
-                        $"Type = \"{c.Type}\";",
-                        $"Selections:"
-                    };
-                    lines.AddRange(c.Selections.Select(kv => $"  {kv.Key} = {kv.Value};"));
+                        lines.AddRange(new List<string>()
+                        {
+                            $"Area = {measurement.Area};",
+                            $"Length = {measurement.Length};",
+                            $"Count = {measurement.Count};",
+                            $"Type = \"{measurement.Type}\";",
+                            $"Selections:"
+                        });
+                        lines.AddRange(measurement.Selections.Select(kv => $"  {kv.Key} = {kv.Value};"));
+                    }
 
                     return string.Join("\n", lines);
                 })

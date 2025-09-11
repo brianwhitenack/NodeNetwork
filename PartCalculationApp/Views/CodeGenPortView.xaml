@@ -26,10 +26,28 @@
             </Viewbox>
         </ControlTemplate>
 
+        <ControlTemplate x:Key="{x:Static local1:CodeGenPortView.IntegerListPortTemplateKey}" TargetType="views:PortView">
+            <Viewbox StretchDirection="Both" Stretch="Uniform">
+                <Grid Width="20" Height="20">
+                    <Rectangle Fill="#7cb342" HorizontalAlignment="Left" VerticalAlignment="Center" Height="15" Width="15"/>
+                    <Path Fill="#7cb342" Data="M 0 0 L 4 4 L 0 8 Z" HorizontalAlignment="Right" VerticalAlignment="Center" Height="8" Width="4"/>
+                </Grid>
+            </Viewbox>
+        </ControlTemplate>
+
         <ControlTemplate x:Key="{x:Static local1:CodeGenPortView.StringPortTemplateKey}" TargetType="views:PortView">
             <Viewbox StretchDirection="Both" Stretch="Uniform">
                 <Grid Width="20" Height="20">
                     <Ellipse Fill="#ba68c8" HorizontalAlignment="Left" VerticalAlignment="Center" Height="15" Width="15"/>
+                    <Path Fill="#ba68c8" Data="M 0 0 L 4 4 L 0 8 Z" HorizontalAlignment="Right" VerticalAlignment="Center" Height="8" Width="4"/>
+                </Grid>
+            </Viewbox>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="{x:Static local1:CodeGenPortView.StringListPortTemplateKey}" TargetType="views:PortView">
+            <Viewbox StretchDirection="Both" Stretch="Uniform">
+                <Grid Width="20" Height="20">
+                    <Rectangle Fill="#ba68c8" HorizontalAlignment="Left" VerticalAlignment="Center" Height="15" Width="15"/>
                     <Path Fill="#ba68c8" Data="M 0 0 L 4 4 L 0 8 Z" HorizontalAlignment="Right" VerticalAlignment="Center" Height="8" Width="4"/>
                 </Grid>
             </Viewbox>
@@ -44,10 +62,28 @@
             </Viewbox>
         </ControlTemplate>
 
+        <ControlTemplate x:Key="{x:Static local1:CodeGenPortView.MeasurementListPortTemplateKey}" TargetType="views:PortView">
+            <Viewbox StretchDirection="Both" Stretch="Uniform">
+                <Grid Width="20" Height="20">
+                    <Rectangle Fill="Cyan" HorizontalAlignment="Left" VerticalAlignment="Center" Height="15" Width="15"/>
+                    <Path Fill="Cyan" Data="M 0 0 L 4 4 L 0 8 Z" HorizontalAlignment="Right" VerticalAlignment="Center" Height="8" Width="4"/>
+                </Grid>
+            </Viewbox>
+        </ControlTemplate>
+
         <ControlTemplate x:Key="{x:Static local1:CodeGenPortView.PartPortTemplateKey}" TargetType="views:PortView">
             <Viewbox StretchDirection="Both" Stretch="Uniform">
                 <Grid Width="20" Height="20">
                     <Ellipse Fill="Orange" HorizontalAlignment="Left" VerticalAlignment="Center" Height="15" Width="15"/>
+                    <Path Fill="Orange" Data="M 0 0 L 4 4 L 0 8 Z" HorizontalAlignment="Right" VerticalAlignment="Center" Height="8" Width="4"/>
+                </Grid>
+            </Viewbox>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="{x:Static local1:CodeGenPortView.PartListPortTemplateKey}" TargetType="views:PortView">
+            <Viewbox StretchDirection="Both" Stretch="Uniform">
+                <Grid Width="20" Height="20">
+                    <Rectangle Fill="Orange" HorizontalAlignment="Left" VerticalAlignment="Center" Height="15" Width="15"/>
                     <Path Fill="Orange" Data="M 0 0 L 4 4 L 0 8 Z" HorizontalAlignment="Right" VerticalAlignment="Center" Height="8" Width="4"/>
                 </Grid>
             </Viewbox>

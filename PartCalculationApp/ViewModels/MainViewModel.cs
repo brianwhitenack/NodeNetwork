@@ -85,7 +85,7 @@ namespace ExampleCodeGenApp.ViewModels
             PartsOutputNode partsOutputNode = new PartsOutputNode 
             {
                 CanBeRemovedByUser = false,
-                Position = new Point(1000, 50) 
+                Position = new Point(1000, 500) 
             };
             Network.Nodes.Add(partsOutputNode);
 
@@ -105,28 +105,11 @@ namespace ExampleCodeGenApp.ViewModels
             NodeList.AddNodeType(() => new AddNode());
             NodeList.AddNodeType(() => new MultiplyNode());
 
-
-            Measurement input = new Measurement()
-            {
-                Length = 50,
-                Count = 1,
-                Type = "Beam",
-                Selections = new Dictionary<string, object>()
-                 {
-                    { "Thickness", 2 },
-                    { "Width", 4 },
-                    { "Material", "LVL" },
-                    { "BeamType", "HEADER" },
-                    { "Plies", 3 },
-                 }
-            };
-
-            measurementInputNode.MeasurementOutput.Value = Observable.Return(input);
             Output.InputNode = measurementInputNode;
             Output.OutputNode = partsOutputNode;
 
-            IObservable<Measurement> measurementObservable = measurementInputNode.MeasurementOutput.Value.Select(m => m);
-            measurementObservable.BindTo(this, vm => vm.MeasurementDisplay.Measurement);
+            IObservable<List<Measurement>> measurementObservable = measurementInputNode.MeasurementOutput.Value.Select(m => m);
+            measurementObservable.BindTo(this, vm => vm.MeasurementDisplay.Measurements);
 
             ForceDirectedLayouter layouter = new ForceDirectedLayouter();
 			AutoLayout = ReactiveCommand.Create(() => layouter.Layout(new Configuration { Network = Network }, 10000));
@@ -215,7 +198,7 @@ namespace ExampleCodeGenApp.ViewModels
                 {
                     try
                     {
-                        var loadedNetwork = graphSerializer.DeserializeFromFile(openDialog.FileName, input);
+                        var loadedNetwork = graphSerializer.DeserializeFromFile(openDialog.FileName);
                         
                         // Replace the current network with the loaded one
                         Network.Nodes.Clear();
@@ -242,9 +225,6 @@ namespace ExampleCodeGenApp.ViewModels
                         if (digitizerNode != null)
                         {
                             Output.InputNode = digitizerNode;
-                            // Restore the measurement observable
-                            IObservable<Measurement> measurementObservable = digitizerNode.MeasurementOutput.Value.Select(m => m);
-                            measurementObservable.BindTo(this, vm => vm.MeasurementDisplay.Measurement);
                         }
 
                         if (partsNode != null)

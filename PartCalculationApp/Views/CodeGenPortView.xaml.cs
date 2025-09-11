@@ -30,9 +30,13 @@ namespace ExampleCodeGenApp.Views
         #region Template Resource Keys
         public const String ExecutionPortTemplateKey = "ExecutionPortTemplate";
         public const String IntegerPortTemplateKey = "IntegerPortTemplate";
+        public const String IntegerListPortTemplateKey = "IntegerListPortTemplate";
         public const String StringPortTemplateKey = "StringPortTemplate"; 
+        public const String StringListPortTemplateKey = "StringListPortTemplate"; 
         public const String MeasurementPortTemplateKey = "MeasurementPortTemplate"; 
+        public const String MeasurementListPortTemplateKey = "MeasurementListPortTemplate"; 
         public const String PartPortTemplateKey = "PartPortTemplate";
+        public const String PartListPortTemplateKey = "PartListPortTemplate";
         #endregion
 
         public CodeGenPortView()
@@ -57,10 +61,15 @@ namespace ExampleCodeGenApp.Views
             switch (type)
             {
                 case PortDataType.Boolean: return (ControlTemplate) Resources[ExecutionPortTemplateKey];
+                case PortDataType.BooleanCollection: return (ControlTemplate) Resources[ExecutionPortTemplateKey];
                 case PortDataType.Number: return (ControlTemplate) Resources[IntegerPortTemplateKey];
+                case PortDataType.NumberCollection: return (ControlTemplate) Resources[IntegerListPortTemplateKey];
                 case PortDataType.String: return (ControlTemplate) Resources[StringPortTemplateKey];
+                case PortDataType.StringCollection: return (ControlTemplate) Resources[StringListPortTemplateKey];
                 case PortDataType.Measurement: return (ControlTemplate) Resources[MeasurementPortTemplateKey];
+                case PortDataType.MeasurementCollection: return (ControlTemplate) Resources[MeasurementListPortTemplateKey];
                 case PortDataType.Part: return (ControlTemplate) Resources[PartPortTemplateKey];
+                case PortDataType.PartCollection: return (ControlTemplate) Resources[PartListPortTemplateKey];
                 default: throw new Exception("Unsupported port type");
             }
         }

@@ -54,19 +54,19 @@ namespace PartCalculationApp.Serialization
         /// <summary>
         /// Deserializes a network from JSON string.
         /// </summary>
-        public NetworkViewModel DeserializeFromJson(string json, Measurement input)
+        public NetworkViewModel DeserializeFromJson(string json)
         {
             var graph = JsonConvert.DeserializeObject<SerializedGraph>(json, _jsonSettings);
-            return DeserializeGraph(graph, input);
+            return DeserializeGraph(graph);
         }
 
         /// <summary>
         /// Deserializes a network from a file.
         /// </summary>
-        public NetworkViewModel DeserializeFromFile(string filePath, Measurement input)
+        public NetworkViewModel DeserializeFromFile(string filePath)
         {
             var json = File.ReadAllText(filePath);
-            return DeserializeFromJson(json, input);
+            return DeserializeFromJson(json);
         }
 
         private SerializedGraph SerializeGraph(NetworkViewModel network)
@@ -104,7 +104,7 @@ namespace PartCalculationApp.Serialization
             return graph;
         }
 
-        private NetworkViewModel DeserializeGraph(SerializedGraph graph, Measurement measurementInput)
+        private NetworkViewModel DeserializeGraph(SerializedGraph graph)
         {
             NetworkViewModel network = new NetworkViewModel();
 
@@ -116,8 +116,8 @@ namespace PartCalculationApp.Serialization
                 network.Nodes.Add(node);
             }
 
-            DigitizerMeasurementsNode measurementInputNode = network.Nodes.Items.OfType<DigitizerMeasurementsNode>().First();
-            measurementInputNode.MeasurementOutput.Value = Observable.Return(measurementInput);
+            //DigitizerMeasurementsNode measurementInputNode = network.Nodes.Items.OfType<DigitizerMeasurementsNode>().First();
+            //measurementInputNode.MeasurementOutput.Value = Observable.Return(measurementInput);
 
             // Phase 2: Restore connections
             foreach (SerializedConnection serializedConnection in graph.Connections)
