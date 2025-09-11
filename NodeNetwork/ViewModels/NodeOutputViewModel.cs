@@ -27,8 +27,12 @@ namespace NodeNetwork.ViewModels
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         #endregion
 
+        public Guid Id { get; protected set; }
+
         public NodeOutputViewModel()
         {
+            Id = Guid.NewGuid();
+
             MaxConnections = Int32.MaxValue;
             this.PortPosition = PortPosition.Right;
         }

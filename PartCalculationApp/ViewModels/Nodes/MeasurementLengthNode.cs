@@ -7,6 +7,7 @@ using ExampleCodeGenApp.ViewModels.Editors;
 using ExampleCodeGenApp.Views;
 
 using PartCalculationApp.Model;
+using PartCalculationApp.Serialization;
 
 using ReactiveUI;
 
@@ -56,6 +57,16 @@ namespace PartCalculationApp.ViewModels.Nodes
             {
                 return MeasurementInput.Value.Length;
             }
+        }
+
+        protected override SerializedNode InternalSerialize()
+        {
+            return new SerializedMeasurementLengthNode();
+        }
+
+        protected override void InternalDeserialize(SerializedNode data)
+        {
+
         }
     }
 }

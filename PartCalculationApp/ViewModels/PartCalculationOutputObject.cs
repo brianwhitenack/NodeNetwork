@@ -1,7 +1,6 @@
 ﻿using System.Reactive;
 
 using PartCalculationApp.Model;
-using PartCalculationApp.ViewModels;
 using PartCalculationApp.ViewModels.Nodes;
 
 using ReactiveUI;

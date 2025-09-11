@@ -7,6 +7,8 @@ using ExampleCodeGenApp.ViewModels.Editors;
 
 using NodeNetwork.Views;
 
+using PartCalculationApp.Serialization;
+
 using ReactiveUI;
 
 namespace PartCalculationApp.ViewModels.Nodes
@@ -50,6 +52,16 @@ namespace PartCalculationApp.ViewModels.Nodes
                 Value = sum
             };
             Outputs.Add(Output);
+        }
+
+        protected override SerializedNode InternalSerialize()
+        {
+            return new SerializedSubtractNode();
+        }
+
+        protected override void InternalDeserialize(SerializedNode data)
+        {
+
         }
     }
 }

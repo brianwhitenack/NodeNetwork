@@ -62,9 +62,13 @@ namespace NodeNetwork.ViewModels
         }
         private Func<PendingConnectionViewModel, ConnectionValidationResult> _connectionValidator;
         #endregion
+
+        public Guid Id { get; protected set; }
         
         public NodeInputViewModel()
         {
+            Id = Guid.NewGuid();
+
             this.HideEditorIfConnected = true;
 
             this.Connections.CountChanged.Select(c => c == 0).StartWith(true)

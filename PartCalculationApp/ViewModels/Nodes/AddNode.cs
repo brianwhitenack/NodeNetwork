@@ -1,4 +1,5 @@
-﻿using System.Reactive.Linq;
+﻿using System;
+using System.Reactive.Linq;
 
 using DynamicData;
 
@@ -6,6 +7,8 @@ using ExampleCodeGenApp.ViewModels;
 using ExampleCodeGenApp.ViewModels.Editors;
 
 using NodeNetwork.Views;
+
+using PartCalculationApp.Serialization;
 
 using ReactiveUI;
 
@@ -40,7 +43,7 @@ namespace PartCalculationApp.ViewModels.Nodes
                 Editor = new DoubleValueEditorViewModel()
             };
             Inputs.Add(Input2);
-            
+
             var sum = this.WhenAnyValue(vm => vm.Input1.Value, vm => vm.Input2.Value)
                 .Select(_ => Input1.Value != null && Input2.Value != null ? Input1.Value + Input2.Value : null);
 
@@ -50,6 +53,16 @@ namespace PartCalculationApp.ViewModels.Nodes
                 Value = sum
             };
             Outputs.Add(Output);
+        }
+
+        protected override SerializedNode InternalSerialize()
+        {
+            return new SerializedAddNode();
+        }
+
+        protected override void InternalDeserialize(SerializedNode data)
+        {
+
         }
     }
 }

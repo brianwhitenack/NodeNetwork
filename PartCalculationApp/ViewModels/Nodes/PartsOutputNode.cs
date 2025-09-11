@@ -4,6 +4,7 @@ using ExampleCodeGenApp.ViewModels;
 using ExampleCodeGenApp.Views;
 
 using PartCalculationApp.Model;
+using PartCalculationApp.Serialization;
 
 using ReactiveUI;
 
@@ -25,6 +26,16 @@ namespace PartCalculationApp.ViewModels.Nodes
             PartsInput = new InputViewModel<Part>(PortDataType.Part);
 
             Inputs.Add(PartsInput);
+        }
+
+        protected override SerializedNode InternalSerialize()
+        {
+            return new SerializedPartsOutputNode();
+        }
+
+        protected override void InternalDeserialize(SerializedNode data)
+        {
+
         }
     }
 }

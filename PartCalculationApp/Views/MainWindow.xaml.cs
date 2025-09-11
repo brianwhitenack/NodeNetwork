@@ -48,6 +48,9 @@ namespace ExampleCodeGenApp.Views
                 this.OneWayBind(ViewModel, vm => vm.Output, v => v.codeSimView.ViewModel).DisposeWith(d);
                 this.OneWayBind(ViewModel, vm => vm.NetworkBreadcrumbBar, v => v.breadcrumbBar.ViewModel).DisposeWith(d);
 
+                this.BindCommand(ViewModel, vm => vm.SaveGraph, v => v.saveGraphButton).DisposeWith(d);
+                this.BindCommand(ViewModel, vm => vm.LoadGraph, v => v.loadGraphButton).DisposeWith(d);
+
                 this.BindCommand(ViewModel, vm => vm.AutoLayout, v => v.autoLayoutButton);
 
                 this.BindCommand(ViewModel, vm => vm.GroupNodes, v => v.groupNodesButton).DisposeWith(d);

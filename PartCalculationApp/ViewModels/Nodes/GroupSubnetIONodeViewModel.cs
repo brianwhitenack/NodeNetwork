@@ -4,6 +4,9 @@ using System.Text;
 using ExampleCodeGenApp.Views;
 using NodeNetwork.Toolkit.Group.AddEndpointDropPanel;
 using NodeNetwork.ViewModels;
+
+using PartCalculationApp.Serialization;
+
 using ReactiveUI;
 
 namespace ExampleCodeGenApp.ViewModels.Nodes
@@ -46,6 +49,16 @@ namespace ExampleCodeGenApp.ViewModels.Nodes
             this.Subnet = subnet;
             _isEntranceNode = isEntranceNode;
             _isExitNode = isExitNode;
+        }
+
+        protected override SerializedNode InternalSerialize()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void InternalDeserialize(SerializedNode data)
+        {
+            throw new NotImplementedException();
         }
     }
 }

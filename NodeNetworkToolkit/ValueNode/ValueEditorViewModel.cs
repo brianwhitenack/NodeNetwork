@@ -43,5 +43,22 @@ namespace NodeNetwork.Toolkit.ValueNode
         {
             ValueChanged = this.WhenAnyValue(vm => vm.Value);
         }
+
+        public override object GetValue()
+        {
+            return Value;
+        }
+
+        public override void SetValue(object value)
+        {
+            if (value is T tValue)
+            {
+                Value = tValue;
+            }
+            else
+            {
+                throw new ArgumentException($"Value must be of type {typeof(T).FullName}");
+            }
+        }
     }
 }
