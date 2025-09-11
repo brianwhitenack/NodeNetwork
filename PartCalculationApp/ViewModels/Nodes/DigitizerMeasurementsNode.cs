@@ -26,7 +26,7 @@ namespace PartCalculationApp.ViewModels.Nodes
 
         public InputViewModel<string> MeasurementType { get; set; }
 
-        public OutputViewModel<List<Measurement>> MeasurementOutput { get; set; }
+        public listout<List<Measurement>> MeasurementOutput { get; set; }
 
         public DigitizerMeasurementsNode() : base(NodeType.Input)
         {

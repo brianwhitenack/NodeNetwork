@@ -1,4 +1,6 @@
-﻿using DynamicData;
+﻿using System.Collections.Generic;
+
+using DynamicData;
 
 using ExampleCodeGenApp.ViewModels;
 using ExampleCodeGenApp.Views;
@@ -17,13 +19,16 @@ namespace PartCalculationApp.ViewModels.Nodes
             Splat.Locator.CurrentMutable.Register(() => new CodeGenNodeView(), typeof(IViewFor<PartsOutputNode>));
         }
 
-        public InputViewModel<Part> PartsInput { get; set; }
+        public ListInputViewModel<Part> PartsInput { get; set; }
 
         public PartsOutputNode() : base(NodeType.Output)
         {
             Name = "Parts";
 
-            PartsInput = new InputViewModel<Part>(PortDataType.Part);
+            PartsInput = new ListInputViewModel<Part>(PortDataType.PartCollection)
+            {
+                Name = "Parts"
+            };
 
             Inputs.Add(PartsInput);
         }

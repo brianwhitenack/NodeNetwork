@@ -21,7 +21,7 @@ namespace ExampleCodeGenApp.ViewModels
         public DigitizerMeasurementsNode InputNode { get; set; }
         public PartsOutputNode OutputNode { get; set; }
         #endregion
-        
+
         #region Output
         public string Output
         {
@@ -38,26 +38,28 @@ namespace ExampleCodeGenApp.ViewModels
         {
             Calculate = ReactiveCommand.Create(() =>
                 {
-                    if (OutputNode?.PartsInput?.Value != null)
+                    if (OutputNode?.PartsInput?.Values != null)
                     {
-                        Part generatedPart = OutputNode.PartsInput.Value;
-                        if (generatedPart != null)
+                        foreach (Part generatedPart in OutputNode.PartsInput.Values.Items)
                         {
-                            Print($"Generated Part:");
-                            Print($"SKU: {generatedPart.Sku}");
-                            Print($"Desc: {generatedPart.Description}");
-                            Print($"Package: {generatedPart.Package}");
-                            Print($"Qty: {generatedPart.Quantity}");
-                            Print($"UOM: {generatedPart.UnitOfMeasure}");
-                        }
-                        else
-                        {
-                            Print("No part created");
+                            if (generatedPart != null)
+                            {
+                                Print($"Generated Part:");
+                                Print($"SKU: {generatedPart.Sku}");
+                                Print($"Desc: {generatedPart.Description}");
+                                Print($"Package: {generatedPart.Package}");
+                                Print($"Qty: {generatedPart.Quantity}");
+                                Print($"UOM: {generatedPart.UnitOfMeasure}");
+                            }
+                            else
+                            {
+                                Print("No part created");
+                            }
                         }
                     }
                     else
                     {
-                        Print("No part created");
+                        Print("No parts created");
                     }
                 });
 

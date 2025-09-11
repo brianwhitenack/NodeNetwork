@@ -1,5 +1,6 @@
 ﻿using System;
 
+using NodeNetwork;
 using NodeNetwork.Toolkit.ValueNode;
 using NodeNetwork.Views;
 
@@ -26,6 +27,16 @@ namespace ExampleCodeGenApp.ViewModels
             };
 
             Port = PartCalculationPort;
+
+            // Set up connection validator
+            this.ConnectionValidator = pendingConnection =>
+            {
+                if (pendingConnection.Output?.Port is PartCalculationPortViewModel outputPort)
+                {
+                    return ConnectionValidationHelper.ValidateConnection(PartCalculationPort, outputPort);
+                }
+                return new ConnectionValidationResult(false, "Invalid output port");
+            };
         }
 
         public PortDataType GetPortDataType()
