@@ -12,9 +12,9 @@ namespace ExampleCodeGenApp.Model
         public string FunctionName { get; set; }
         public List<IExpression> Parameters { get; } = new List<IExpression>();
 
-        public string Compile(CompilerContext context)
+        public void Execute()
         {
-            return $"{FunctionName}({String.Join(", ", Parameters.Select(p => p.Compile(context)))})\n";
+            throw new NotImplementedException();
         }
     }
 }

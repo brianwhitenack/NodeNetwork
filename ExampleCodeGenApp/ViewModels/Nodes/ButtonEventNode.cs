@@ -19,13 +19,13 @@ namespace ExampleCodeGenApp.ViewModels.Nodes
             Splat.Locator.CurrentMutable.Register(() => new CodeGenNodeView(), typeof(IViewFor<ButtonEventNode>));
         }
 
-        public ValueListNodeInputViewModel<IStatement> OnClickFlow { get; }
+        public ValueNodeInputViewModel<IStatement> OnClickFlow { get; }
 
         public ButtonEventNode() : base(NodeType.EventNode)
         {
             this.Name = "Button Events";
 
-            OnClickFlow = new CodeGenListInputViewModel<IStatement>(PortType.Execution)
+            OnClickFlow = new CodeGenInputViewModel<IStatement>(PortType.Execution)
             {
                 Name = "On Click"
             };

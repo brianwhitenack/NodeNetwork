@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+
 using ExampleCodeGenApp.Model.Compiler;
 
 namespace ExampleCodeGenApp.Model
@@ -11,23 +8,25 @@ namespace ExampleCodeGenApp.Model
     {
         public List<IStatement> Statements { get; } = new List<IStatement>();
 
-        public StatementSequence()
-        {}
+        public StatementSequence(params IStatement[] statements)
+        {
+            if (statements != null && statements.Length > 0)
+            {
+                Statements.AddRange(statements);
+            }
+        }
 
         public StatementSequence(IEnumerable<IStatement> statements)
         {
             Statements.AddRange(statements);
         }
 
-        public string Compile(CompilerContext context)
+        public void Execute()
         {
-            string result = "";
             foreach (IStatement statement in Statements)
             {
-                result += statement.Compile(context);
-                result += "\n";
+                statement.Execute();
             }
-            return result;
         }
     }
 }

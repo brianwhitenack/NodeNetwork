@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ExampleCodeGenApp.Model.Compiler;
+﻿using ExampleCodeGenApp.Model.Compiler;
 
 namespace ExampleCodeGenApp.Model
 {
-    public class IntLiteral : ITypedExpression<int>
+    public class IntLiteral : ITypedVariable<int>
     {
         public int Value { get; set; }
 
-        public string Compile(CompilerContext context)
+        public int Evaluate()
         {
-            return Value.ToString();
+            return Value;
+        }
+
+        public void SetValue(int value)
+        {
+            Value = value;
         }
     }
 }

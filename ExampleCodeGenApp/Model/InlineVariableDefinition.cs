@@ -7,16 +7,18 @@ using ExampleCodeGenApp.Model.Compiler;
 
 namespace ExampleCodeGenApp.Model
 {
-    public class InlineVariableDefinition<T> : ITypedVariableDefinition<T>
-    {
-        public string VariableName { get; private set; }
-        public ITypedExpression<T> Value { get; set; }
+    //public class InlineVariableDefinition<T> : ITypedVariableDefinition<T>
+    //{
+    //    public InlineVariableDefinition()
+    //    {
+    //    }
 
-        public string Compile(CompilerContext context)
-        {
-            VariableName = context.FindFreeVariableName();
-            context.AddVariableToCurrentScope(this);
-            return $"{VariableName} = {Value.Compile(context)}";
-        }
-    }
+    //    public string VariableName { get; private set; }
+    //    public ITypedExpression<T> Value { get; set; }
+
+    //    public void Execute()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 }

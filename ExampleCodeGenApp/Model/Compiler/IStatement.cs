@@ -2,6 +2,6 @@
 {
     public interface IStatement
     {
-        string Compile(CompilerContext context);
+        public void Execute();
     }
 }

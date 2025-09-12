@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Reactive.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using ExampleCodeGenApp.Model.Compiler;
-using ExampleCodeGenApp.Model.Compiler.Error;
+
 using ReactiveUI;
 
 namespace ExampleCodeGenApp.ViewModels
@@ -40,19 +37,21 @@ namespace ExampleCodeGenApp.ViewModels
             this.WhenAnyValue(vm => vm.Code).Where(c => c != null)
                 .Select(c =>
                 {
-                    CompilerError = "";
-                    CompilerContext ctx = new CompilerContext();
+                    //CompilerError = "";
+                    //CompilerContext ctx = new CompilerContext();
 
-                    try
-                    {
-                        return c.Compile(ctx);
-                    }
-                    catch (CompilerException e)
-                    {
-                        string trace = string.Join("\n", ctx.VariablesScopesStack.Select(s => s.Identifier));
-                        CompilerError = e.Message + "\nProblem is near:\n"+ trace;
-                        return "";
-                    }
+                    //try
+                    //{
+                    //    return c.Compile(ctx);
+                    //}
+                    //catch (CompilerException e)
+                    //{
+                    //    string trace = string.Join("\n", ctx.VariablesScopesStack.Select(s => s.Identifier));
+                    //    CompilerError = e.Message + "\nProblem is near:\n"+ trace;
+                    //    return "";
+                    //}
+
+                    return "";
                 })
                 .ToProperty(this, vm => vm.CompiledCode, out _compiledCode);
         }

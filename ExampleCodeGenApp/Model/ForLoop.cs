@@ -15,20 +15,17 @@ namespace ExampleCodeGenApp.Model
         public ITypedExpression<int> LowerBound { get; set; }
         public ITypedExpression<int> UpperBound { get; set; }
 
-        public InlineVariableDefinition<int> CurrentIndex { get; } = new InlineVariableDefinition<int>();
+        public IntLiteral CurrentIndex { get; } = new IntLiteral();
 
-        public string Compile(CompilerContext context)
+        public void Execute()
         {
-            context.EnterNewScope("For loop");
+            for (int i = LowerBound.Evaluate(); i < UpperBound.Evaluate(); i++)
+            {
+                CurrentIndex.SetValue(i);
+                LoopBody?.Execute();
+            }
 
-            CurrentIndex.Value = LowerBound;
-            string code = $"for {CurrentIndex.Compile(context)}, {UpperBound.Compile(context)} do\n" +
-                   LoopBody.Compile(context) + "\n" +
-                   $"end\n" +
-                   LoopEnd.Compile(context) + "\n";
-
-            context.LeaveScope();
-            return code;
+            LoopEnd?.Execute();
         }
     }
 }

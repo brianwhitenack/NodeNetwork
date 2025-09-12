@@ -7,13 +7,18 @@ using ExampleCodeGenApp.Model.Compiler;
 
 namespace ExampleCodeGenApp.Model
 {
-    public class StringLiteral : ITypedExpression<string>
+    public class StringLiteral : ITypedVariable<string>
     {
         public string Value { get; set; }
 
-        public string Compile(CompilerContext ctx)
+        public string Evaluate()
         {
-            return $"\"{Value}\"";
+            return Value;
+        }
+
+        public void SetValue(string value)
+        {
+            Value = value;
         }
     }
 }

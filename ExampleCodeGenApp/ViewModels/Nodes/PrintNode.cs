@@ -22,8 +22,6 @@ namespace ExampleCodeGenApp.ViewModels.Nodes
         }
 
         public ValueNodeInputViewModel<ITypedExpression<string>> Text { get; }
-
-        public ValueNodeOutputViewModel<IStatement> Flow { get; }
         
         public PrintNode() : base(NodeType.Function)
         {
@@ -34,20 +32,6 @@ namespace ExampleCodeGenApp.ViewModels.Nodes
                 Name = "Text"
             };
             this.Inputs.Add(Text);
-
-            Flow = new CodeGenOutputViewModel<IStatement>(PortType.Execution)
-            {
-                Name = "",
-                Value = this.Text.ValueChanged.Select(stringExpr => new FunctionCall
-                {
-                    FunctionName = "print",
-                    Parameters =
-                    {
-                        stringExpr ?? new StringLiteral{Value = ""}
-                    }
-                })
-            };
-            this.Outputs.Add(Flow);
         }
     }
 }

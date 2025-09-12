@@ -71,9 +71,8 @@ namespace ExampleCodeGenApp.ViewModels
             NodeList.AddNodeType(() => new PrintNode());
             NodeList.AddNodeType(() => new TextLiteralNode());
 
-            var codeObservable = eventNode.OnClickFlow.Values.Connect().Select(_ => new StatementSequence(eventNode.OnClickFlow.Values.Items));
-            codeObservable.BindTo(this, vm => vm.CodePreview.Code);
-            codeObservable.BindTo(this, vm => vm.CodeSim.Code);
+            eventNode.OnClickFlow.ValueChanged.BindTo(this, vm => vm.CodePreview.Code);
+            eventNode.OnClickFlow.ValueChanged.BindTo(this, vm => vm.CodeSim.Code);
 
 			ForceDirectedLayouter layouter = new ForceDirectedLayouter();
 			AutoLayout = ReactiveCommand.Create(() => layouter.Layout(new Configuration { Network = Network }, 10000));

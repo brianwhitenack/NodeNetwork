@@ -38,10 +38,10 @@ namespace ExampleCodeGenApp.ViewModels
         {
             RunScript = ReactiveCommand.Create(() =>
                 {
-                    Script script = new Script();
-                    script.Globals["print"] = (Action<string>)Print;
-                    string source =  Code.Compile(new CompilerContext());
-                    script.DoString(source);
+                    //Script script = new Script();
+                    //script.Globals["print"] = (Action<string>)Print;
+                    //string source =  Code.Compile(new CompilerContext());
+                    //script.DoString(source);
                 },
                 this.WhenAnyValue(vm => vm.Code).Select(code => code != null));
 
