@@ -28,6 +28,7 @@ namespace ExampleCodeGenApp.Views
         #endregion
 
         #region Template Resource Keys
+        public const String UnknownPortTemplateKey = "UnknownPortTemplate";
         public const String ExecutionPortTemplateKey = "ExecutionPortTemplate";
         public const String IntegerPortTemplateKey = "IntegerPortTemplate";
         public const String IntegerListPortTemplateKey = "IntegerListPortTemplate";
@@ -70,6 +71,8 @@ namespace ExampleCodeGenApp.Views
                 case PortDataType.MeasurementCollection: return (ControlTemplate) Resources[MeasurementListPortTemplateKey];
                 case PortDataType.Part: return (ControlTemplate) Resources[PartPortTemplateKey];
                 case PortDataType.PartCollection: return (ControlTemplate) Resources[PartListPortTemplateKey];
+                case PortDataType.Collection: return (ControlTemplate) Resources[ExecutionPortTemplateKey];
+                case PortDataType.Unknown: return (ControlTemplate) Resources[UnknownPortTemplateKey];
                 default: throw new Exception("Unsupported port type");
             }
         }

@@ -31,6 +31,7 @@ namespace PartCalculationApp.Serialization
     [JsonSubtypes.KnownSubType(typeof(SerializedDivideNode), "Divide")]
     [JsonSubtypes.KnownSubType(typeof(SerializedDigitizerMeasurementsNode), "DigitizerMeasurements")]
     [JsonSubtypes.KnownSubType(typeof(SerializedPartsOutputNode), "PartsOutput")]
+    [JsonSubtypes.KnownSubType(typeof(SerializedForeachNode), "ForEach")]
     public abstract class SerializedNode
     {
         public Guid Id { get; set; }
@@ -142,5 +143,10 @@ namespace PartCalculationApp.Serialization
     public class SerializedPartsOutputNode : SerializedNode
     {
         public override string Type => "PartsOutput";
+    }
+
+    public class SerializedForeachNode : SerializedNode
+    {
+        public override string Type => "ForEach";
     }
 }

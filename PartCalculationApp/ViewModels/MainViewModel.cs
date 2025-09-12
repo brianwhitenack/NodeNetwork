@@ -93,6 +93,7 @@ namespace ExampleCodeGenApp.ViewModels
             NodeList.AddNodeType(() => new NumberLiteralNode());
             NodeList.AddNodeType(() => new StringLiteralNode());
 
+            // functions
             NodeList.AddNodeType(() => new StringSelectionNode());
             NodeList.AddNodeType(() => new NumberSelectionNode());
             NodeList.AddNodeType(() => new CreatePartNode());
@@ -100,15 +101,21 @@ namespace ExampleCodeGenApp.ViewModels
             NodeList.AddNodeType(() => new ConcatenationNode());
             NodeList.AddNodeType(() => new ToStringNode());
 
+            // math
             NodeList.AddNodeType(() => new DivideNode());
             NodeList.AddNodeType(() => new SubtractNode());
             NodeList.AddNodeType(() => new AddNode());
             NodeList.AddNodeType(() => new MultiplyNode());
 
+            // loop
+            NodeList.AddNodeType(() => new ForEachNode());
+
             Output.InputNode = measurementInputNode;
             Output.OutputNode = partsOutputNode;
 
-            IObservable<List<Measurement>> measurementObservable = measurementInputNode.MeasurementOutput.Value.Select(m => m);
+            // Convert IObservableList<Measurement> to List<Measurement> for binding
+            IObservable<List<Measurement>> measurementObservable = measurementInputNode.MeasurementOutput.Value
+                .Select(observableList => observableList?.Items.ToList() ?? new List<Measurement>());
             measurementObservable.BindTo(this, vm => vm.MeasurementDisplay.Measurements);
 
             ForceDirectedLayouter layouter = new ForceDirectedLayouter();
@@ -243,6 +250,14 @@ namespace ExampleCodeGenApp.ViewModels
 
         private void RegisterNodeTypes(NodeFactory factory)
         {
+            //foreach (NodeViewModel node in Network.Nodes.Items)
+            //{
+            //    if (node is PartCalculationViewModel partNode)
+            //    {
+            //        factory.RegisterNode(partNode.NodeType.ToString(), );
+            //    }
+            //}
+
             // Register all node types that implement ISerializableNode
             // These registrations should match the types in the NodeList
             factory.RegisterNode("StringLiteral", () => new StringLiteralNode());
@@ -259,6 +274,7 @@ namespace ExampleCodeGenApp.ViewModels
             factory.RegisterNode("Divide", () => new DivideNode());
             factory.RegisterNode("DigitizerMeasurements", () => new DigitizerMeasurementsNode());
             factory.RegisterNode("PartsOutput", () => new PartsOutputNode());
+            factory.RegisterNode("ForEach", () => new ForEachNode());
         }
     }
 }

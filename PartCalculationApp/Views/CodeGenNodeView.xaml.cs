@@ -58,6 +58,7 @@ namespace ExampleCodeGenApp.Views
                 case NodeType.Input: return new SolidColorBrush(Color.FromRgb(0x9b, 0x00, 0x00));
                 case NodeType.Output: return new SolidColorBrush(Color.FromRgb(0x49, 0x49, 0x49));
                 case NodeType.Function: return new SolidColorBrush(Color.FromRgb(0x00, 0x39, 0xcb));
+                case NodeType.Loop: return new SolidColorBrush(Color.FromRgb(0x49, 0x49, 0x49));
                 case NodeType.Literal: return new SolidColorBrush(Color.FromRgb(0x00, 0x60, 0x0f));
                 //case NodeType.Group: return new SolidColorBrush(Color.FromRgb(0x7B, 0x1F, 0xA2));
                 default: throw new Exception("Unsupported node type");

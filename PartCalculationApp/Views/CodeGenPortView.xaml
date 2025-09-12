@@ -17,6 +17,14 @@
             </Viewbox>
         </ControlTemplate>
 
+        <ControlTemplate x:Key="{x:Static local1:CodeGenPortView.UnknownPortTemplateKey}" TargetType="views:PortView">
+            <Viewbox StretchDirection="Both" Stretch="Uniform">
+                <Grid Width="20" Height="20">
+                    <Ellipse Fill="Red" HorizontalAlignment="Left" VerticalAlignment="Center" Height="15" Width="15"/>
+                </Grid>
+            </Viewbox>
+        </ControlTemplate>
+
         <ControlTemplate x:Key="{x:Static local1:CodeGenPortView.IntegerPortTemplateKey}" TargetType="views:PortView">
             <Viewbox StretchDirection="Both" Stretch="Uniform">
                 <Grid Width="20" Height="20">

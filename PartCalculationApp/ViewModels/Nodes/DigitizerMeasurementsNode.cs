@@ -26,7 +26,7 @@ namespace PartCalculationApp.ViewModels.Nodes
 
         public InputViewModel<string> MeasurementType { get; set; }
 
-        public listout<List<Measurement>> MeasurementOutput { get; set; }
+        public ListOutputViewModel<Measurement> MeasurementOutput { get; set; }
 
         public DigitizerMeasurementsNode() : base(NodeType.Input)
         {
@@ -43,11 +43,14 @@ namespace PartCalculationApp.ViewModels.Nodes
                vm => vm.MeasurementType.Value
             ).Select(_ => FilterMeasurements());
 
-            MeasurementOutput = new OutputViewModel<List<Measurement>>(PortDataType.MeasurementCollection)
+            MeasurementOutput = new ListOutputViewModel<Measurement>(PortDataType.MeasurementCollection)
             {
-                Name = "Filtered Measurements",
-                Value = measurements
+                Name = "Filtered Measurements"
             };
+            
+            // Set the observable list from the measurements observable
+            MeasurementOutput.SetObservableList(measurements);
+            
             Outputs.Add(MeasurementOutput);
         }
 

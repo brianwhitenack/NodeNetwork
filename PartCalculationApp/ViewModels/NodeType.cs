@@ -6,6 +6,7 @@
         Output,
         Function,
         Literal,
-        Group
+        Group,
+        Loop
     }
 }
